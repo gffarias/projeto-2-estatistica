@@ -1,7 +1,7 @@
 # Integrantes:
 # Gustavo Farani de Farias (gff)
 # Thayná TODO
-# Izael TODO
+# Izael Effemberg da Costa (iec)
 
 # Questão 1
 dados = data.frame(Detalhes_de_Albuns)
@@ -22,3 +22,29 @@ statMode <- function (y) {
 }
 
 statMode(dados$Qnt..de.Albuns.Vendidos)
+
+#Questão 5
+
+getAlbumMaisVendidoEmUmAno <- function(ano) {
+  vendas = max(dados[dados$Ano == ano,][[5]])
+  album = dados[dados[5] == vendas,]["Album"]
+  banda = dados[dados[[5]] == vendas,]["Artista"]
+  return (merge(album, banda))
+}
+
+getAlbumMenosVendidoEmUmAno <- function(ano) {
+  vendas = min(dados[dados$Ano == ano,][[5]])
+  album = dados[dados[5] == vendas,]["Album"]
+  banda = dados[dados[5] == vendas,]["Artista"]
+  return (merge(album, banda))
+}
+
+getAlbuns <- function(ano) {
+  maisVendidoEmUmAno = getAlbumMaisVendidoEmUmAno(ano)
+  menosVendidoEmUmAno = getAlbumMenosVendidoEmUmAno(ano)
+  return(rbind(maisVendidoEmUmAno, menosVendidoEmUmAno))
+}
+
+print(getAlbuns(2018))
+
+
