@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1573249282359.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2545175552",
+    "id" : "766101A9",
+    "lastKnownWriteTime" : 1573251142,
+    "last_content_update" : 1573251150291,
+    "path" : "~/Documents/Projeto2Estatistica/questoes.R",
+    "project_path" : "questoes.R",
+    "properties" : {
+        "cursorPosition" : "23,39",
+        "scrollLine" : "9",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

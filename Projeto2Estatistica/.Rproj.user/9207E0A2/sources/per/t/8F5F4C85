@@ -1,0 +1,33 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1573249794583.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "8F5F4C85",
+    "lastKnownWriteTime" : 3,
+    "last_content_update" : 1573249794583,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "D8AFDAB0",
+        "caption" : "Detalhes_de_Albuns",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Detalhes_de_Albuns&cache_key=D8AFDAB0",
+        "displayedObservations" : 41,
+        "environment" : "",
+        "expression" : "Detalhes_de_Albuns",
+        "object" : "Detalhes_de_Albuns",
+        "preview" : 0,
+        "totalObservations" : 41,
+        "variables" : 5
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
