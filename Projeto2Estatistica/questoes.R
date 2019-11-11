@@ -88,6 +88,29 @@ getAlbuns <- function(ano) {
 
 print(getAlbuns(2018))
 
+# Questão 6
+names <- c(Detalhes_de_Albuns_Página1$`Artista`)
+year <- c(Detalhes_de_Albuns_Página1$`Ano`)
+data <- list()
+
+unity = 0
+contador = 0
+contador2 = 1
+
+for(i in names){
+  for(j in names){
+    if(j == i)
+      contador = contador + 1
+  }
+  if(contador == 1){
+    unity = unity + 1
+    data[unity] <- paste("Artista:", i, "||", "Ano:", year[contador2], sep = " ", collapse = NULL) #Concatena e insere
+  }
+  contador2 <- contador2 + 1
+  contador <- 0
+}
+data
+
 # Questão 7
 
 artistas <- dados$Artistas
@@ -125,29 +148,6 @@ numeroDeArtistasPorEmpresa <- order(numeroDeArtistasPorEmpresa$NUMERO_DE_ARTISTA
 
 print(numeroDeArtistasPorEmpresa)
 cat("\n")
-
-# Questão 6
-names <- c(Detalhes_de_Albuns_Página1$`Artista`)
-year <- c(Detalhes_de_Albuns_Página1$`Ano`)
-data <- list()
-
-unity = 0
-contador = 0
-contador2 = 1
-
-for(i in names){
-  for(j in names){
-    if(j == i)
-      contador = contador + 1
-  }
-  if(contador == 1){
-    unity = unity + 1
-    data[unity] <- paste("Artista:", i, "||", "Ano:", year[contador2], sep = " ", collapse = NULL) #Concatena e insere
-  }
-  contador2 <- contador2 + 1
-  contador <- 0
-}
-data
 
 # Questão 8
 topFreq <- function(scores) {
