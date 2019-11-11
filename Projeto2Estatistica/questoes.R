@@ -23,7 +23,7 @@ statMode <- function (y) {
 
 statMode(dados$Qnt..de.Albuns.Vendidos)
 
-#Questao 3:
+# Questão 3
 names <- c(Detalhes_de_Albuns_Página1$`Artista`)
 dates <- c(Detalhes_de_Albuns_Página1$`Ano`)
 publish2018 <- c()
@@ -47,7 +47,25 @@ for(i in resposta){
     print(publish2019[i])
 }
 
-#Questão 5
+# Questão 4
+argminSD <- function (keys, values) {
+  single <- unique(keys)
+  map <- match(keys, single)
+  tab <- matrix(NA, length(keys), length(single))
+  for (i in 1:length(keys)) {
+    tab[i, map[i]] <- values[i]
+  }
+  stdDev <- rep(NA, times = length(single))
+  for (j in 1:length(single)) {
+    stdDev[j] <- sd(tab[, j], na.rm = TRUE)
+  }
+  posMin <- which.min(stdDev)
+  return (single[posMin])
+}
+
+argminSD(dados$Artista, dados$Qnt..de.Albuns.Vendidos)
+
+# Questão 5
 getAlbumMaisVendidoEmUmAno <- function(ano) {
   vendas = max(dados[dados$Ano == ano,][[5]])
   album = dados[dados[5] == vendas,]["Album"]
@@ -108,7 +126,7 @@ numeroDeArtistasPorEmpresa <- order(numeroDeArtistasPorEmpresa$NUMERO_DE_ARTISTA
 print(numeroDeArtistasPorEmpresa)
 cat("\n")
 
-#Questao 6:
+# Questão 6
 names <- c(Detalhes_de_Albuns_Página1$`Artista`)
 year <- c(Detalhes_de_Albuns_Página1$`Ano`)
 data <- list()
@@ -131,7 +149,25 @@ for(i in names){
 }
 data
 
-#Questao 9:
+# Questão 8
+topFreq <- function(scores) {
+  contingency <- as.data.frame(table(scores))
+  names(contingency) = c("keys", "freq")
+  podium <- order(contingency$freq, decreasing = TRUE)[1:3]
+  return (as.vector(contingency$keys[podium]))
+}
+
+produtivos <- data.frame("Artista" = topFreq(dados$Artista), 
+                         "Total de Vendas" = rep(0, 3))
+for (j in 1:3) {
+  vendas <- dados$Qnt..de.Albuns.Vendidos[dados$Artista == produtivos$Artista[j]]
+  produtivos$Total.de.Vendas[j] <- sum(vendas)
+}
+
+shuffle <- produtivos[order(produtivos$Total.de.Vendas, decreasing = TRUE), ]
+produtivos <- data.frame("Artista" = shuffle$Artista, "Total de Vendas" = shuffle$Total.de.Vendas)
+
+# Questão 9
 empresa <- c(Detalhes_de_Albuns$`Empresa`)
 album <- c(Detalhes_de_Albuns$`Album`)
 vendas <- c(Detalhes_de_Albuns$`Qnt. de Albuns Vendidos`)
@@ -163,3 +199,17 @@ for(x in empresa){                                  #Varre o array de empresas
   }
 }
 
+# Questão 10
+vendasAnuais <- function(gravadora) {
+  lancamentos <- dados$Ano[dados$Empresa == gravadora]
+  return (hist(lancamentos, 
+               main = paste(gravadora, ": Produção Anual"),
+               xlab = "Ano",
+               ylab = "Lançamentos",
+               col = "red",
+               border = "black",
+               xlim = c(2017, 2020),
+               ylim = c(0, 5),
+               las = 1,
+               breaks = seq(2017.5, 2019.5, 1)))
+}
