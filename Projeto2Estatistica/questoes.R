@@ -70,6 +70,44 @@ getAlbuns <- function(ano) {
 
 print(getAlbuns(2018))
 
+# Questão 7
+
+artistas <- dados$Artistas
+artistasVerificados <- c()
+empresas <- dados$Empresas
+empresasVerificadas <- c()
+quantidadeDeArtistasPorEmpresas <- c()
+# remove os artistas repetidos
+for (i in artistas){
+  if(!is.element(artistas[i], artistasVerificados)){
+    artistasVerificados <- c(artistasVerificados, artistas[i])
+    empresasVerificadas <- c(empresasVerificadas, empresas[i])
+  }
+}
+
+todasAsEmpresas = unique(dados$Empresas)
+
+getTotalDeArtistasPorEmpresa <- function(empresa){
+  total <- 0
+  for (i in artistasVerificados) {
+    if (empresa == empresaVerificada[i]){
+      total = total + 1
+    }
+  }
+  return(total)
+}
+
+# popula o vetor de quantidade de artistas por empresas
+for (i in todasAsEmpresas) {
+  quantidadeDeArtistasPorEmpresas <- c(quantidadeDeArtistasPorEmpresas, getTotalDeArtistasPorEmpresa(todasAsEmpresas[i]))
+}
+
+numeroDeArtistasPorEmpresa <- data.frame(EMPRESAS = todasAsEmpresas, NUMERO_DE_ARTISTAS = quantidadeDeArtistasPorEmpresas)
+numeroDeArtistasPorEmpresa <- order(numeroDeArtistasPorEmpresa$NUMERO_DE_ARTISTAS)
+
+print(numeroDeArtistasPorEmpresa)
+cat("\n")
+
 #Questao 6:
 names <- c(Detalhes_de_Albuns_Página1$`Artista`)
 year <- c(Detalhes_de_Albuns_Página1$`Ano`)
