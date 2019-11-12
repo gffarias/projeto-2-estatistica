@@ -112,42 +112,11 @@ for(i in names){
 data
 
 # Questão 7
-
-artistas <- dados$Artistas
-artistasVerificados <- c()
-empresas <- dados$Empresas
-empresasVerificadas <- c()
-quantidadeDeArtistasPorEmpresas <- c()
-# remove os artistas repetidos
-for (i in artistas){
-  if(!is.element(artistas[i], artistasVerificados)){
-    artistasVerificados <- c(artistasVerificados, artistas[i])
-    empresasVerificadas <- c(empresasVerificadas, empresas[i])
-  }
+get_quantidade_de_artistas_por_empresa <- function(artistas_por_empresa){
+  length(unique(artistas_por_empresa))
 }
-
-todasAsEmpresas = unique(dados$Empresas)
-
-getTotalDeArtistasPorEmpresa <- function(empresa){
-  total <- 0
-  for (i in artistasVerificados) {
-    if (empresa == empresaVerificada[i]){
-      total = total + 1
-    }
-  }
-  return(total)
-}
-
-# popula o vetor de quantidade de artistas por empresas
-for (i in todasAsEmpresas) {
-  quantidadeDeArtistasPorEmpresas <- c(quantidadeDeArtistasPorEmpresas, getTotalDeArtistasPorEmpresa(todasAsEmpresas[i]))
-}
-
-numeroDeArtistasPorEmpresa <- data.frame(EMPRESAS = todasAsEmpresas, NUMERO_DE_ARTISTAS = quantidadeDeArtistasPorEmpresas)
-numeroDeArtistasPorEmpresa <- order(numeroDeArtistasPorEmpresa$NUMERO_DE_ARTISTAS)
-
-print(numeroDeArtistasPorEmpresa)
-cat("\n")
+empresa_num_artistas <- aggregate(Artista ~ Empresa, dados, get_quantidade_de_artistas_por_empresa)
+print(empresa_num_artistas)
 
 # Questão 8
 topFreq <- function(scores) {
@@ -198,6 +167,19 @@ for(x in empresa){                                  #Varre o array de empresas
     contador = 1
   }
 }
+
+# função de pegar album mais vendido de uma empresa
+get_album_mais_vendido_por_empresa <- function(empresa, data) {
+  album_vendas <- subset(data, Empresa == empresa, c("Album", "Qnt..de.Albuns.Vendidos"))
+  album_vendas[which.max(album_vendas[, "Qnt..de.Albuns.Vendidos"]), "Album"]
+}
+
+# dataframe com album mais vendido de cada empresa de forma decrescente
+ordem <- order(data[, "Qnt..de.Albuns.Vendidos"], decreasing = T)
+empresa_artista_album_vendas <- data[ordem, c("Empresa","Artista","Album","Qnt..de.Albuns.Vendidos")]
+linhas_com_empresas_duplicadas <- duplicated(empresa_artista_album_vendas[,"Empresa"])
+empresa_artista_album_vendas <- empresa_artista_album_vendas[!linhas_com_empresas_duplicadas,]
+print(empresa_artista_album_vendas)
 
 # Questão 10
 vendasAnuais <- function(gravadora) {
