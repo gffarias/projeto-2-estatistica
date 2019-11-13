@@ -4,6 +4,9 @@
 # Izael Effemberg da Costa (iec)
 
 # Questão 1
+
+# dados <- read.csv("/Users/izaeleffemberg/Projects/projeto-2-estatistica/Projeto2Estatistica/Detalhes de Albuns.csv", stringsAsFactors = F)
+
 dados = data.frame(Detalhes_de_Albuns)
 print(dados)
 
@@ -86,7 +89,7 @@ getAlbuns <- function(ano) {
   return(rbind(maisVendidoEmUmAno, menosVendidoEmUmAno))
 }
 
-print(getAlbuns(2018))
+print(getAlbuns(2019))
 
 # Questão 6
 names <- c(Detalhes_de_Albuns_Página1$`Artista`)
@@ -137,49 +140,21 @@ shuffle <- produtivos[order(produtivos$Total.de.Vendas, decreasing = TRUE), ]
 produtivos <- data.frame("Artista" = shuffle$Artista, "Total de Vendas" = shuffle$Total.de.Vendas)
 
 # Questão 9
-empresa <- c(Detalhes_de_Albuns$`Empresa`)
-album <- c(Detalhes_de_Albuns$`Album`)
-vendas <- c(Detalhes_de_Albuns$`Qnt. de Albuns Vendidos`)
-check <- c()
-
-contador = 1
-marcador = 0
-maisVendido = 0
-for(x in empresa){                                  #Varre o array de empresas
-  if(x %in% check == FALSE){                        #checa se aquela empresa ja foi propagada
-    for(y in empresa){                              #propaga o elemento corrente de X
-      if(y == x){                                   #Se ele encontrou a empresa q ta propagando
-        if(vendas[contador] > maisVendido){         #Checa se o valor de vendas relacionado eh maior do que o que ta guardado
-          maisVendido = vendas[contador]
-          data = album[contador]
-        }
-      }
-      contador = contador + 1
-    }
-    print("Empresa:")
-    print(x) 
-    print("Album mais vendido:") 
-    print(data)
-    cat("\n")
-    
-    check <- c(check, x)
-    maisVendido = 0
-    contador = 1
-  }
-}
-
-# função de pegar album mais vendido de uma empresa
 get_album_mais_vendido_por_empresa <- function(empresa, data) {
-  album_vendas <- subset(data, Empresa == empresa, c("Album", "Qnt..de.Albuns.Vendidos"))
-  album_vendas[which.max(album_vendas[, "Qnt..de.Albuns.Vendidos"]), "Album"]
+  album_vendas <- subset(data, Empresa == empresa, c("Album", "Qnt..de.Albuns.Vendidos", "Empresa", "Artista"))
+  album_vendas[which.max(album_vendas[, "Qnt..de.Albuns.Vendidos"]),]
 }
 
-# dataframe com album mais vendido de cada empresa de forma decrescente
-ordem <- order(data[, "Qnt..de.Albuns.Vendidos"], decreasing = T)
-empresa_artista_album_vendas <- data[ordem, c("Empresa","Artista","Album","Qnt..de.Albuns.Vendidos")]
-linhas_com_empresas_duplicadas <- duplicated(empresa_artista_album_vendas[,"Empresa"])
-empresa_artista_album_vendas <- empresa_artista_album_vendas[!linhas_com_empresas_duplicadas,]
-print(empresa_artista_album_vendas)
+print(get_album_mais_vendido_por_empresa('BigHit', dados))
+
+# lapply = Map
+empresas_distintas <- unique(dados[,"Empresa"])
+empresa_artista_album_vendas <- do.call(rbind, lapply(empresas_distintas, get_album_mais_vendido_por_empresa, dados))
+
+empresa_artista_album_vendas_ordem <- order(empresa_artista_album_vendas[, "Qnt..de.Albuns.Vendidos"], decreasing = T)
+empresa_artista_album_vendas_ordenado <- empresa_artista_album_vendas[empresa_artista_album_vendas_ordem, ]
+
+print(empresa_artista_album_vendas_ordenado)
 
 # Questão 10
 vendasAnuais <- function(gravadora) {
